@@ -1,6 +1,6 @@
 import java.util.*;
 
-class Pair<T, S>{
+public class Pair<T, S>{
     T first;
     S second;
     public Pair(T first, S second){

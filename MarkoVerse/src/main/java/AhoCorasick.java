@@ -8,9 +8,11 @@ public class AhoCorasick {
     }
 
     private TrieNode root;
+    private Map<Integer, String> words;
 
     public AhoCorasick() {
         root = new TrieNode();
+        words = new HashMap<>();
     }
 
     // Вставка слова в префиксное дерево
@@ -20,6 +22,7 @@ public class AhoCorasick {
             current = current.children.computeIfAbsent(c, k -> new TrieNode());
         }
         current.output.add(index);
+        words.put(index, word);
     }
 
     // Построение автоматов
@@ -62,9 +65,10 @@ public class AhoCorasick {
     }
 
     // Поиск вхождений в тексте
-    public List<Integer> search(String text) {
-        List<Integer> result = new ArrayList<>();
+    public List<Pair<Integer, Integer>> search(String text) {
+        List<Pair<Integer, Integer>> result = new ArrayList<>();
         TrieNode current = root;
+        int maxPriority = Integer.MAX_VALUE;
 
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
@@ -72,8 +76,22 @@ public class AhoCorasick {
                 current = current.failLink;
             }
             current = current.children.getOrDefault(c, root);
-            result.addAll(current.output);
+            for (int index : current.output) {
+                int position = i - words.get(index).length() + 1;
+
+                if (index < maxPriority) {
+                    result.clear();
+                    maxPriority = index;
+                    result.add(new Pair<>(position, index));
+                }
+                else if (index == maxPriority) {
+                    result.add(new Pair<>(position, index));
+                }
+            }
         }
+        if (result.isEmpty())
+            result.add(new Pair<>(-1, -1));
+
         return result;
     }
 }

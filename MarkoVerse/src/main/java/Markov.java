@@ -24,8 +24,8 @@ public class Markov {
     }
 
     // Поиск вхождений в тексте
-    public Integer search(String text) {
-        List<Integer> foundIndices = AC.search(text);
+    public Pair<Integer, Integer> search(String text) {
+        List<Pair<Integer, Integer>> foundIndices = AC.search(text);
         int ind = random.nextInt(foundIndices.size());
         return foundIndices.get(ind);
     }
