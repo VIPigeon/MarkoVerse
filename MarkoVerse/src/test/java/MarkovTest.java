@@ -57,4 +57,17 @@ public class MarkovTest {
         Pair<Integer, Integer> expectedMatch = expectedMatches.get(random.nextInt(5));
         assertPairsAreEqual(expectedMatch, match);
     }
+
+    @Test
+    public void NoInstancesFoundTest() {
+        List<String> keywords = Arrays.asList("he", "she", "his", "hers");
+
+        createMarkovFromList(keywords);
+
+        String text = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+        Pair<Integer, Integer> match = markov.search(text);
+        Pair<Integer, Integer> expectedMatch = new Pair<>(-1, -1);
+        assertPairsAreEqual(expectedMatch, match);
+    }
 }
