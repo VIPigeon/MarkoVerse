@@ -26,6 +26,8 @@ public class MarkoVerse2D {
         int direction = match[3];
 
         if (rule_id == -1) {
+            // System.out.println(row_index);
+            // System.out.println(column_index);
             return false;
         }
 

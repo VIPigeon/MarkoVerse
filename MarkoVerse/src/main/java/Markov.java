@@ -67,6 +67,9 @@ public class Markov {
             for (int i = 0; i < pos_rule.size(); i++) {
                 int pos = pos_rule.get(i).getFirst();
                 int rule_id = pos_rule.get(i).getSecond();
+                if (pos == -1) {
+                    break;
+                }
                 foundMatches.add(new Match(rule_id, row_i, pos, 3));
             }
 
@@ -81,6 +84,9 @@ public class Markov {
             for (int i = 0; i < pos_rule.size(); i++) {
                 int pos = pos_rule.get(i).getFirst();
                 int rule_id = pos_rule.get(i).getSecond();
+                if (pos == -1) {
+                    break;
+                }
                 foundMatches.add(new Match(rule_id, row_i, n - pos - 1, 2));
             }
         }
@@ -96,6 +102,9 @@ public class Markov {
             for (int i = 0; i < pos_rule.size(); i++) {
                 int pos = pos_rule.get(i).getFirst();
                 int rule_id = pos_rule.get(i).getSecond();
+                if (pos == -1) {
+                    break;
+                }
                 foundMatches.add(new Match(rule_id, pos, j, 1));
             }
 
@@ -110,8 +119,14 @@ public class Markov {
             for (int i = 0; i < pos_rule.size(); i++) {
                 int pos = pos_rule.get(i).getFirst();
                 int rule_id = pos_rule.get(i).getSecond();
+                if (pos == -1) {
+                    break;
+                }
                 foundMatches.add(new Match(rule_id, n - pos - 1, j, 0));
             }
+        }
+        if (foundMatches.isEmpty()) {
+            return new int[]{-1, -1, -1, -1};
         }
         int ind = random.nextInt(foundMatches.size());
         Match match = foundMatches.get(ind);

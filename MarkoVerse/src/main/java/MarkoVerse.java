@@ -2,7 +2,7 @@ import java.util.*;
 
 public class MarkoVerse {
     private char[] current_word;
-    private int limit = 1000;  // максимальное количество итераций алгоритм
+    private int limit = 1000;  // максимальное количество итераций алгоритма
     private List<Pair<String, String>> rules;
     private Markov markov = new Markov();
 
