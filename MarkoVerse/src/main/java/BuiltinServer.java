@@ -76,7 +76,7 @@ public class BuiltinServer {
             MarkoVerse2D markoverse2D = new MarkoVerse2D();
             markoverse2D.build(wordChars, rules);
 
-            // TODO (если в GUI реализовано больше одного метода): сделать зависимость работы markoverse от name
+            // todo (если в GUI реализовано больше одного метода): сделать зависимость работы markoverse от name
             // if (name == "")
             writeJsonFile(markoverse2D.run());
 
@@ -87,15 +87,34 @@ public class BuiltinServer {
     }
 
     private static void writeJsonFile(char[][] result) {
-        // TODO:
-        // записать результат работы в json
         Path filePath = Paths.get("..", "demo", "data", "output.json").toAbsolutePath().normalize();
-        // ...
+        // for (char[] row : result) {
+        //     for (char c : row) {
+        //         System.out.print((int) c + " ");  // печатаем числовые коды символов
+        //     }
+        //     System.out.println();
+        // }
+
+        // Преобразуем char[][] в List<List<Integer>>
+        List<List<Integer>> finalResult = new ArrayList<>();
         for (char[] row : result) {
+            List<Integer> intRow = new ArrayList<>();
             for (char c : row) {
-                System.out.print((int) c + " ");  // печатаем числовые коды символов
+                intRow.add((int) c);
             }
-            System.out.println();
+            finalResult.add(intRow);
+        }
+
+        // Оборачиваем в карту с ключом "final"
+        Map<String, Object> output = new HashMap<>();
+        output.put("final", finalResult);
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writerWithDefaultPrettyPrinter().writeValue(filePath.toFile(), output);
+            System.out.println("Output written to: " + filePath);
+        } catch (IOException e) {
+            System.err.println("Failed to write output JSON: " + e.getMessage());
         }
     }
 }
